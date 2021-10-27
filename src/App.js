@@ -78,7 +78,6 @@ function App() {
                 An error occurred retrieving salary information. Please
                 try again later.
               </p>
-      
         }
       </SalaryContext.Provider>
     </WindowContext.Provider>

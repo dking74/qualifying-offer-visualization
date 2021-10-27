@@ -62,6 +62,5 @@ export const parseHtmlToPlayerRows = (html) => {
     })
     .toArray()
     .filter(row => row !== null);
-  
   return playerRows;
 };
