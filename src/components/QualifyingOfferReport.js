@@ -6,8 +6,6 @@ import PageBreak from './PageBreak';
 
 import SalaryContext from '../context/salary-context';
 
-import SalaryContext from '../context/salary-context';
-
 import { moneyFormatter } from '../utils/string';
 import { findAverageSalary } from '../utils/salary';
 
