@@ -17,6 +17,7 @@ function App() {
 
   const [screenSize, setScreenSize] = useState(getScreenSize());
   const [salaryData, setSalaryData] = useState([]);
+  const [timeout, setDataTimeout] = useState(false);
 
   const updateSalaryData = useCallback(() => {
     console.log('*** Getting player salary data ***');
@@ -50,18 +51,35 @@ function App() {
     setScreenSize(event.target.innerWidth);
   }), [screenSize]);
 
+  // Lifecycle hook mechanism to check after 10 seconds
+  // if there is still no data. In this case, no data was
+  // able to be retrieved properly.
+  const timeoutCallback = useCallback(() => {
+    const timer = setTimeout(() => {
+      const isDataAvailable = salaryData?.length > 0;
+      if (!isDataAvailable)
+        console.log('*** Unable to get data after 10 seconds ***');
+      setDataTimeout(!isDataAvailable);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, [setDataTimeout, salaryData]);
+  useEffect(timeoutCallback, [timeoutCallback]);
+
   return (
     <WindowContext.Provider value={screenSize}>
       <SalaryContext.Provider value={salaryData}>
-          <div className="App">
-            <ChartTabs />
-          </div>
-        {/* {salaryData.length */}
-          {/* ? ( */}
-          {/* ) : (
-            <ProgressBar />
-          )
-        } */}
+        { salaryData?.length
+          ? <div className="App">
+              <ChartTabs />
+            </div>
+          : !timeout
+            ? <ProgressBar />
+            : <p className='p-5 pt-3'>
+                An error occurred retrieving salary information. Please
+                try again later.
+              </p>
+      
+        }
       </SalaryContext.Provider>
     </WindowContext.Provider>
   );

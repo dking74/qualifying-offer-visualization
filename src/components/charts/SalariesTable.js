@@ -4,18 +4,12 @@ import Table from 'react-bootstrap/Table';
 import { moneyFormatter } from '../../utils/string';
 
 function SalariesTable({ salariesData = [], maxShow = 25, loadAll = true }) {
-  // Getting the intial salaries is determined by one property loadAll.
-  // LoadAll indicates whether we should load all of the salaries at once or not. When we choose
-  // not to, we want to show only 25 entries at a time that then can later be opened further.
-  const getInitialSalaries = () => (
-     (!loadAll && salariesData.slice(0, maxShow))
-    ) || salariesData;
   const [currentSalaries, setCurrentSalaries] = useState([]);
 
-  // When the salaries data changes, trigger effect to update what the current values are
   useEffect(() => {
-    setCurrentSalaries(getInitialSalaries())
-  }, [salariesData])
+    const data = (!loadAll && salariesData.slice(0, maxShow)) || salariesData;
+    setCurrentSalaries(data);
+  }, [salariesData, loadAll, maxShow])
 
   // Open up the current salary entries to the next 25 appended on
   const loadMoreSalaries = () => {
@@ -23,16 +17,15 @@ function SalariesTable({ salariesData = [], maxShow = 25, loadAll = true }) {
     const endSalariesLength = currentSalariesLength + maxShow;
     setCurrentSalaries(salariesData.slice(0, endSalariesLength));
   };
-  const loadAllSalaries = () => {
-    setCurrentSalaries(salariesData);
-  }
+  const loadAllSalaries = () => setCurrentSalaries(salariesData);
 
   // Determine whether we should show a 'Load More' option for expanding the user search
   const canLoadMoreSalaries = () => !loadAll &&
     (currentSalaries.length < salariesData.length);
 
   // Determine the number of salaries to show as remaining based on how many are left to see
-  const getRemainingSalaries = () => salariesData.length - currentSalaries.length < maxShow
+  const getRemainingSalaries = () => 
+    salariesData.length - currentSalaries.length < maxShow
       ? salariesData.length - currentSalaries.length
       : maxShow;
 
@@ -57,7 +50,7 @@ function SalariesTable({ salariesData = [], maxShow = 25, loadAll = true }) {
                   firstName = firstName?.trim();
                   return (
                     <tr className="player-salary-row" key={`${name}-${salary}-${index}`}>
-                      <td className="player-salary-column">{index}</td>
+                      <td className="player-salary-column">{index + 1}</td>
                       <td className="player-salary-column">{firstName}</td>
                       <td className="player-salary-column">{lastName}</td>
                       <td className="player-salary-column">{moneyFormatter.format(salary)}</td>
@@ -67,7 +60,7 @@ function SalariesTable({ salariesData = [], maxShow = 25, loadAll = true }) {
               }
               { canLoadMoreSalaries() && (
                 <tr>
-                  <td colSpan="3">
+                  <td colSpan="4">
                     <table style={{width: '100%'}}>
                       <tbody><tr>
                         <td onClick={loadMoreSalaries} style={{color: 'blue', cursor: 'pointer', textAlign: 'center', border: 'none'}}>
