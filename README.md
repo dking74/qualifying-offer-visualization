@@ -50,7 +50,7 @@ If any row violates any of the above, it is dismissed from the calculations. If 
 
 ## Published Urls
 - **[Qualifying Frontend](https://qualifying-offer-visualization.herokuapp.com)**: This the URL that the website for qualifying offer data is actually located. If you wish to interact with the website, go to that URL.
-- **[Proxy](https://html-proxy.herokuapp.com/)**: This was a piece that was added in order to properly be able to retrieve website data. Because of CORS restrictions, unless the website html allows for requests from heroku host, a single website cannot make a fetch call to another website. This proxy exists to be able provide a server -> client side connection for pulling the website data while setting up the hosts that can query on the resource. Please see below in [Giving thanks!](#giving-thanks!).
+- **[Proxy](https://html-proxy.herokuapp.com/)**: This was a piece that was added in order to properly be able to retrieve website data. Because of CORS restrictions, unless the website html allows for requests from heroku host, a single website cannot make a fetch call to another website. This proxy exists to be able provide a server -> client side connection for pulling the website data while setting up the hosts that can query on the resource. Please see below in [Giving thanks!](#giving-thanks).
 
 Both published URLs are serviced and deployed through Heroku.
 
