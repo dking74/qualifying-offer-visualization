@@ -53,15 +53,15 @@ function App() {
   return (
     <WindowContext.Provider value={screenSize}>
       <SalaryContext.Provider value={salaryData}>
-        {salaryData.length
-          ? (
-            <div className="App">
-              <ChartTabs />
-            </div>
-          ) : (
+          <div className="App">
+            <ChartTabs />
+          </div>
+        {/* {salaryData.length */}
+          {/* ? ( */}
+          {/* ) : (
             <ProgressBar />
           )
-        }
+        } */}
       </SalaryContext.Provider>
     </WindowContext.Provider>
   );
