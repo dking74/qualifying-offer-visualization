@@ -14,7 +14,7 @@ import { convertMoneyToNumber, isValidMoneyString } from './string';
 const _verifyChildEntryRow = (child) => (
   child?.type === 'tag' &&
   child?.name === 'td' &&
-  child?.children.length > 0 &&
+  child?.children?.length > 0 &&
   child?.children[0]?.data && (
     child?.attribs?.class === playerNameClassMapping || 
     // Filter children if salary class AND not valid money string
