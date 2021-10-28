@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+.progress-bar-container {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.progress-bar-container .spinner-border {
+  height: 200px;
+  width: 200px;
+}
+
+.tab-vertical-container {
+  box-shadow: 0 0 3px blue;
+}
+
+.statistic-section-value {
+  padding-left: 3rem;
+  text-align: left;
+}
+
+.statistic-section-value .header {
+  margin-bottom: 0;
+}
+
+.statistic-section-value .header::after {
+  content: ':';
+}
+
+.tab-vertical-container .nav-link {
+  cursor: pointer;
+}
