@@ -22,6 +22,8 @@ export const getGroupedSalaryData = (salaryData) => {
  * @returns {number} The average value
  */
 export const findAverageSalary = (salaryData) => {
+  if (!salaryData.length) return 0;
+
   const sum = salaryData.reduce((acc, curr) => {
     return acc + curr.salary;
   }, 0);
@@ -57,6 +59,8 @@ export const findNumPlayersBelowAverageSalary = (salaryData, averageSalary) =>
  * @returns {number} The median value
  */
 export const findMedianSalary = (salaryData) => {
+  if (!salaryData.length) return 0;
+
   const medianIndex = Math.floor(salaryData.length / 2);
   // Even number of entries need to find average between two middle
   if (salaryData.length % 2) {
@@ -78,7 +82,9 @@ export const findMedianSalary = (salaryData) => {
  * @returns {number} The standard deviation of the salary data
  */
 export const findStandardDeviation = (salaryData) => {
-  const n = salaryData.length
+  const n = salaryData.length;
+  if (!n) return 0;
+
   const mean = findAverageSalary(salaryData);
-  return Math.sqrt(salaryData.map(x => Math.pow(x.salary - mean, 2)).reduce((a, b) => a + b) / n)
+  return Math.sqrt(salaryData.map(x => Math.pow(x?.salary - mean, 2)).reduce((a, b) => a + b) / n)
 };
