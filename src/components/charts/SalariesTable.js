@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 
 import { moneyFormatter } from '../../utils/string';
@@ -10,7 +10,12 @@ function SalariesTable({ salariesData = [], maxShow = 25, loadAll = true }) {
   const getInitialSalaries = () => (
      (!loadAll && salariesData.slice(0, maxShow))
     ) || salariesData;
-  const [currentSalaries, setCurrentSalaries] = useState(getInitialSalaries());
+  const [currentSalaries, setCurrentSalaries] = useState([]);
+
+  // When the salaries data changes, trigger effect to update what the current values are
+  useEffect(() => {
+    setCurrentSalaries(getInitialSalaries())
+  }, [salariesData])
 
   // Open up the current salary entries to the next 25 appended on
   const loadMoreSalaries = () => {
@@ -33,20 +38,19 @@ function SalariesTable({ salariesData = [], maxShow = 25, loadAll = true }) {
 
   return (
     <Table striped bordered hover size="sm" responsive="md" className="mx-auto w-75 text-start">
-      {currentSalaries.length
-        ? (
-          <>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Salary ($)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                currentSalaries.map((playerSalary, index) => {
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Salary ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        { currentSalaries.length
+          ? (
+            <>
+              { currentSalaries.map((playerSalary, index) => {
                   const { name = '', salary = 0 } = playerSalary;
                   let [lastName, firstName] = name.split(',');
                   lastName = lastName?.trim();
@@ -61,30 +65,30 @@ function SalariesTable({ salariesData = [], maxShow = 25, loadAll = true }) {
                   );
                 })
               }
-              {
-                canLoadMoreSalaries() && (
-                  <tr>
-                    <td colSpan="3">
-                      <table style={{width: '100%'}}>
-                        <tbody><tr>
-                          <td onClick={loadMoreSalaries} style={{color: 'blue', cursor: 'pointer', textAlign: 'center', border: 'none'}}>
-                            <i>Load More ({getRemainingSalaries()})</i>
-                          </td>
-                          <td onClick={loadAllSalaries} style={{color: 'blue', cursor: 'pointer', textAlign: 'center', border: 'none'}}>
-                            <i>Load All ({salariesData.length})</i>
-                          </td>
-                        </tr></tbody>
-                      </table>
-                    </td>
-                  </tr>
-                )
-              }
-            </tbody>
-          </>
-        ) : (
-          'There was no salary data reported!'
-        )
-      }
+              { canLoadMoreSalaries() && (
+                <tr>
+                  <td colSpan="3">
+                    <table style={{width: '100%'}}>
+                      <tbody><tr>
+                        <td onClick={loadMoreSalaries} style={{color: 'blue', cursor: 'pointer', textAlign: 'center', border: 'none'}}>
+                          <i>Load More ({getRemainingSalaries()})</i>
+                        </td>
+                        <td onClick={loadAllSalaries} style={{color: 'blue', cursor: 'pointer', textAlign: 'center', border: 'none'}}>
+                          <i>Load All ({salariesData.length})</i>
+                        </td>
+                      </tr></tbody>
+                    </table>
+                  </td>
+                </tr>
+              )}
+            </>
+          ) : (
+            <tr style={{ textAlign: 'center' }}>
+              <td colSpan={4}>There was no salary data reported!</td>
+            </tr>
+          )
+        }
+      </tbody>
     </Table>
   );
 }
