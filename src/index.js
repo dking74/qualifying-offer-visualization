@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import LazyLoad from 'react-lazy-load';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <LazyLoad>
+      <App />
+    </LazyLoad>
   </React.StrictMode>,
   document.getElementById('root')
 );
